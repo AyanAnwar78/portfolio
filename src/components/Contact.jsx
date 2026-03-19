@@ -1,7 +1,64 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact({ theme }) {
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const socialsRef = useRef(null);
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Header animation
+      gsap.from(headerRef.current, {
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+      });
+
+      // Socials animation
+      gsap.from(socialsRef.current, {
+        scrollTrigger: {
+          trigger: socialsRef.current,
+          start: 'top 90%',
+          toggleActions: 'play none none reverse',
+        },
+        x: -30,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.2,
+        ease: 'power2.out',
+      });
+
+      // Form animation
+      gsap.from(formRef.current, {
+        scrollTrigger: {
+          trigger: formRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        delay: 0.4,
+        ease: 'power2.out',
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const [isSubmitted, setIsSubmitted] = useState(false);
+  // ... existing state and handlers
   const [formData, setFormData] = useState({
     name: '',
     contactType: 'Phone',
@@ -24,12 +81,12 @@ export default function Contact({ theme }) {
   };
 
   return (
-    <section id="contact" className="py-24 px-6 md:px-12 lg:px-24 border-t border-black/5 dark:border-white/5">
+    <section id="contact" ref={sectionRef} className="py-24 px-6 md:px-12 lg:px-24 border-t border-black/5 dark:border-white/5">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-32">
 
         {/* Left Column - Heading & Socials */}
         <div className="lg:w-1/2 flex flex-col justify-between">
-          <div>
+          <div ref={headerRef}>
             <h2 className="text-6xl md:text-8xl lg:text-[7rem] font-display font-black uppercase tracking-tighter leading-[0.85] text-black dark:text-text-light mb-16">
               LET'S GET<br />
               <span className="text-gray-400 dark:text-gray-500 ml-12 md:ml-24">IN TOUCH</span>
@@ -37,8 +94,8 @@ export default function Contact({ theme }) {
           </div>
 
           {/* Social Grid */}
-          <div className="w-fit">
-            <div className="grid grid-cols-2 border-t border-l border-black/10 dark:border-white/20">
+          <div ref={socialsRef} className="w-fit">
+            <div className="grid grid-cols-2 md:grid-cols-3 border-t border-l border-black/10 dark:border-white/20">
               <a href="https://www.facebook.com/profile.php?id=100075786314461" className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center border-r border-b border-black/10 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                 <img src="/logo/facebook.png" alt="Facebook" className="w-8 h-8 object-contain opacity-70 hover:opacity-100 transition-opacity dark:invert-0" />
               </a>
@@ -51,12 +108,15 @@ export default function Contact({ theme }) {
               <a href="https://www.linkedin.com/in/ayananwar/" className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center border-r border-b border-black/10 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                 <img src="/logo/linkedin.png" alt="LinkedIn" className="w-8 h-8 object-contain opacity-70 hover:opacity-100 transition-opacity dark:invert-0" />
               </a>
+              <a href="https://github.com/AyanAnwar78" className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center border-r border-b border-black/10 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                <img src="/logo/github.png" alt="GitHub" className="w-10 h-10 object-contain opacity-70 hover:opacity-100 transition-opacity dark:invert dark:dark:invert-0" />
+              </a>
             </div>
           </div>
         </div>
 
         {/* Right Column - Dynamic Form / Success State */}
-        <div className="lg:w-1/2 flex items-center">
+        <div ref={formRef} className="lg:w-1/2 flex items-center">
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="w-full text-lg md:text-xl leading-loose text-black/80 dark:text-text-light/80 font-sans">
               <p className="mb-6 font-bold text-black dark:text-text-light">Hi ayan anwar,</p>

@@ -1,4 +1,51 @@
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Skills({ theme }) {
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const itemsRef = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Header animation
+      gsap.from(headerRef.current, {
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+      });
+
+      // Skill items staggered animation
+      gsap.from(itemsRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 70%',
+          toggleActions: 'play none none reverse',
+        },
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.6,
+        stagger: {
+          each: 0.05,
+          from: 'start',
+          grid: 'auto',
+        },
+        ease: 'back.out(1.7)',
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const tools = [
     { name: 'React', percentage: '72%', id: 1, icon: '/SVG/react.svg' },
     { name: 'Node.js', percentage: '78%', id: 2, icon: '/SVG/node.svg' },
@@ -18,12 +65,12 @@ export default function Skills({ theme }) {
 
 
   return (
-    <section id="skills" className="py-24 px-6 md:px-12 lg:px-24">
+    <section id="skills" ref={sectionRef} className="py-24 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 lg:gap-24">
 
         {/* Left Side Header */}
         <div className="md:w-1/3">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter text-black dark:text-text-light uppercase leading-tight relative inline-flex items-center gap-4">
+          <h2 ref={headerRef} className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter text-black dark:text-text-light uppercase leading-tight relative inline-flex items-center gap-4">
             SKILLS
             <span className="relative">
               <span className="absolute -left-6 top-1/2 -translate-y-1/2 text-2xl rotate-45 group-hover:rotate-0 transition-transform">✏️</span>
@@ -39,9 +86,10 @@ export default function Skills({ theme }) {
             {/* Background decorative dots */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 dark:opacity-20"></div>
 
-            {tools.map((tool) => (
+            {tools.map((tool, idx) => (
               <div
                 key={tool.id}
+                ref={(el) => (itemsRef.current[idx] = el)}
                 className="group aspect-square flex items-center justify-center p-6 bg-white dark:bg-bg-dark hover:bg-gray-50 dark:hover:bg-[#020202] border-r border-b border-black/5 dark:border-white/10 transition-colors duration-300 relative z-10 overflow-hidden"
               >
                 {/* Hover Background Grid Effect */}

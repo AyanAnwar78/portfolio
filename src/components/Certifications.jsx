@@ -1,4 +1,47 @@
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Certifications({ theme }) {
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const itemsRef = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Header animation
+      gsap.from(headerRef.current, {
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+      });
+
+      // Certification items staggered animation
+      gsap.from(itemsRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 70%',
+          toggleActions: 'play none none reverse',
+        },
+        x: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power2.out',
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const certifications = [
     {
       title: 'ChatGPT-4 Prompt Engineering: ChatGPT, Generative AI & LLM',
@@ -21,12 +64,12 @@ export default function Certifications({ theme }) {
   ];
 
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-24" id="certifications">
+    <section className="py-24 px-6 md:px-12 lg:px-24" id="certifications" ref={sectionRef}>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 lg:gap-24">
 
         {/* Left Side Header */}
         <div className="md:w-1/3">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter text-black dark:text-text-light uppercase leading-tight relative inline-flex items-center gap-4 group">
+          <h2 ref={headerRef} className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter text-black dark:text-text-light uppercase leading-tight relative inline-flex items-center gap-4 group">
             CERTIFICATES
             <span className="relative">
               <span className="absolute -left-6 top-1/2 -translate-y-1/2 text-2xl rotate-45 group-hover:rotate-0 transition-transform">📜</span>
@@ -37,7 +80,7 @@ export default function Certifications({ theme }) {
         {/* Right Side List */}
         <div className="md:w-2/3 flex flex-col gap-16">
           {certifications.map((item, idx) => (
-            <div key={idx} className="flex flex-col gap-4 border-l border-black/10 dark:border-white/10 pl-8 md:pl-12 relative group">
+            <div key={idx} ref={(el) => (itemsRef.current[idx] = el)} className="flex flex-col gap-4 border-l border-black/10 dark:border-white/10 pl-8 md:pl-12 relative group">
               {/* Timeline dot */}
               <div className="absolute left-[-5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-400 dark:bg-text-gray group-hover:bg-[#9cff00] transition-colors duration-300"></div>
 

@@ -1,4 +1,9 @@
+import { useEffect, useRef } from 'react';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -40,13 +45,50 @@ const projects = [
 ];
 
 export default function Projects({ theme }) {
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const cardsRef = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Header animation
+      gsap.from(headerRef.current, {
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+      });
+
+      // Cards staggered animation
+      gsap.from(cardsRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 70%',
+          toggleActions: 'play none none reverse',
+        },
+        y: 60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power2.out',
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="projects" className="py-24 px-6 md:px-12 lg:px-24">
+    <section id="projects" ref={sectionRef} className="py-24 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 lg:gap-24">
         
         {/* Left Side Header */}
         <div className="md:w-1/3">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter text-black dark:text-text-light uppercase leading-tight relative inline-flex items-center gap-4 group">
+          <h2 ref={headerRef} className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter text-black dark:text-text-light uppercase leading-tight relative inline-flex items-center gap-4 group">
             LATEST WORK
             <span className="relative">
               <span className="absolute -left-6 top-1/2 -translate-y-1/2 text-2xl rotate-45 group-hover:rotate-0 transition-transform">🚀</span>
@@ -57,8 +99,8 @@ export default function Projects({ theme }) {
         {/* Right Side Grid */}
         <div className="md:w-2/3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project) => (
-              <div key={project.id} className="group flex flex-col gap-4">
+            {projects.map((project, idx) => (
+              <div key={project.id} ref={(el) => (cardsRef.current[idx] = el)} className="group flex flex-col gap-4">
 
                 {/* Image Container */}
                 <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10">
