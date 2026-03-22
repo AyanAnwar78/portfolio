@@ -1,28 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
-export default function CursorFollower({ theme }) {
+export default function CursorFollower() {
   const circleRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
+    // ... existing effect code
     const circle = circleRef.current;
-
-    // quickTo is more optimized for high-frequency updates like mouse moves
+    
     const xCircleSetter = gsap.quickTo(circle, "x", { duration: 0.5, ease: "power3" });
     const yCircleSetter = gsap.quickTo(circle, "y", { duration: 0.5, ease: "power3" });
 
     const onMouseMove = (e) => {
       const { clientX, clientY } = e;
-      
       xCircleSetter(clientX);
       yCircleSetter(clientY);
     };
 
     const onMouseDown = () => setIsHovering(true);
     const onMouseUp = () => setIsHovering(false);
-
-    // Handle hover states for links and buttons
     const onMouseEnterLink = () => setIsHovering(true);
     const onMouseLeaveLink = () => setIsHovering(false);
 
@@ -47,12 +44,10 @@ export default function CursorFollower({ theme }) {
     };
   }, []);
 
-  const isLight = theme === 'light';
-
   return (
     <>
       {/* Background stays the same */}
-      <div className={`fixed inset-0 z-0 transition-colors duration-500 pointer-events-none ${isLight ? 'bg-white' : 'bg-[#050505]'}`} />
+      <div className="fixed inset-0 z-0 transition-colors duration-500 pointer-events-none bg-[#000000]" />
 
       {/* Custom Cursor Circle */}
       <div className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden">

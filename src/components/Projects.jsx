@@ -44,7 +44,7 @@ const projects = [
   }
 ];
 
-export default function Projects({ theme }) {
+export default function Projects() {
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const cardsRef = useRef([]);
@@ -88,7 +88,7 @@ export default function Projects({ theme }) {
         
         {/* Left Side Header */}
         <div className="md:w-1/3">
-          <h2 ref={headerRef} className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter text-black dark:text-text-light uppercase leading-tight relative inline-flex items-center gap-4 group">
+          <h2 ref={headerRef} className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter text-text-light uppercase leading-tight relative inline-flex items-center gap-4 group">
             LATEST WORK
             <span className="relative">
               <span className="absolute -left-6 top-1/2 -translate-y-1/2 text-2xl rotate-45 group-hover:rotate-0 transition-transform">🚀</span>
@@ -103,7 +103,7 @@ export default function Projects({ theme }) {
               <div key={project.id} ref={(el) => (cardsRef.current[idx] = el)} className="group flex flex-col gap-4">
 
                 {/* Image Container */}
-                <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10">
+                <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-white/5 border border-white/10">
                   <img
                     src={project.image}
                     alt={project.title}
@@ -113,20 +113,20 @@ export default function Projects({ theme }) {
 
                 {/* Project Details */}
                 <div className="flex items-center justify-between mt-2">
-                  <h3 className="text-xl font-bold text-black dark:text-text-light uppercase tracking-tight">
+                  <h3 className="text-xl font-bold text-text-light uppercase tracking-tight">
                     {project.title}
                   </h3>
                   <div className="flex gap-3">
                     <a
                       href={project.github}
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black hover:text-white dark:hover:bg-white/20 transition-all duration-300 text-black dark:text-text-light"
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white hover:text-black transition-all duration-300 text-text-light"
                       target="_blank" rel="noreferrer"
                     >
                       <FiGithub />
                     </a>
                     <a
                       href={project.live}
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black hover:text-white dark:hover:bg-white/20 transition-all duration-300 text-black dark:text-text-light"
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white hover:text-black transition-all duration-300 text-text-light"
                       target="_blank" rel="noreferrer"
                     >
                       <FiExternalLink />
