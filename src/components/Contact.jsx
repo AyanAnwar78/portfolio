@@ -85,7 +85,7 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-32">
 
         {/* Left Column - Heading & Socials */}
-        <div className="lg:w-1/2 flex flex-col justify-between">
+        <div className="lg:w-1/2 flex flex-col justify-start gap-12">
           <div ref={headerRef}>
             <h2 className="text-6xl md:text-8xl lg:text-[7rem] font-display font-black uppercase tracking-tighter leading-[0.85] text-text-light mb-16">
               LET'S GET<br />
@@ -152,19 +152,7 @@ export default function Contact() {
                   value={formData.contactValue}
                   onChange={handleChange}
                 />
-                <span>.</span>
 
-                <br /><br />
-
-                <span>My business or project is called </span>
-                <input
-                  type="text"
-                  name="businessName"
-                  placeholder="{ Business/project name }"
-                  className="bg-transparent border-b border-white/30 px-2 py-0 mx-2 text-text-light placeholder:text-gray-400 focus:outline-none focus:border-text-light w-64 text-center transition-colors"
-                  value={formData.businessName}
-                  onChange={handleChange}
-                />
                 <span>. I'm looking for </span>
                 <select
                   name="serviceType"

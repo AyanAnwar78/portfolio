@@ -31,9 +31,12 @@ export default function Header() {
 
 
           {/* Email */}
-          <div className="hidden lg:block text-text-light font-bold lowercase">
+          <a 
+            href="mailto:ayanahmad0405@gmail.com" 
+            className="hidden lg:block text-text-light font-bold lowercase hover:text-[#9cff00] transition-colors duration-300"
+          >
             ayanahmad0405@gmail.com
-          </div>
+          </a>
 
           {/* Menu */}
           <div

@@ -89,7 +89,7 @@ export default function Skills() {
                 ref={(el) => (itemsRef.current[idx] = el)}
                 className="group aspect-square flex items-center justify-center p-6 bg-white/5 hover:bg-white/10 border-r border-b border-white/10 transition-colors duration-300 relative z-10 overflow-hidden"
               >
-                <div className="flex flex-col items-center justify-center gap-2 relative z-20">
+                <div className="flex flex-col items-center justify-center gap-1 relative z-20">
                   {tool.icon && (
                     <img
                       src={tool.icon}
