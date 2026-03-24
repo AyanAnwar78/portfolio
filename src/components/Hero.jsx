@@ -73,17 +73,17 @@ export default function Hero() {
               <p className="max-w-md text-text-gray font-sans text-sm md:text-base leading-relaxed">
                 Crafting digital experiences through code and design. Specializing in modern web technologies and interactive interfaces.
               </p>
-                <a 
-                  href="/ayananwarCV.pdf" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 rounded-full text-xs font-mono uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 text-text-light"
-                >
-                  View CV
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M7 17l9.2-9.2M17 17V7H7"/>
-                  </svg>
-                </a>
+              <a
+                href="/ayananwarCV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 rounded-full text-xs font-mono uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 text-text-light"
+              >
+                View CV
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M7 17l9.2-9.2M17 17V7H7" />
+                </svg>
+              </a>
             </div>
           </div>
 
@@ -95,15 +95,15 @@ export default function Hero() {
 
         {/* Right Image */}
         <div className="lg:col-span-4 flex justify-center lg:justify-end lg:items-start">
-          <div 
+          <div
             ref={imgRef}
             className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[320px] lg:h-[380px] xl:w-[380px] xl:h-[420px] lg:-mt-20 xl:-mt-24"
           >
             <div className="absolute inset-0 bg-white/5 rounded-3xl -rotate-6 scale-95 transition-transform group-hover:rotate-0 duration-500"></div>
             <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-              <img 
-                src="/ayan.png" 
-                alt="Ayan Anwar" 
+              <img
+                src="/ayan.jpeg"
+                alt="Ayan Anwar"
                 className="w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-700 hover:scale-105"
               />
             </div>
